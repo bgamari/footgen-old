@@ -73,6 +73,7 @@
 # list of attributes to be defined in file
 def defattr():
     return [["elementdir",""],
+            ["outputsuffix",""],
             ["part",""],\
             ["type",""],\
             ["pinshigh", 0],\
@@ -681,7 +682,7 @@ while 1:
             break
     if attribute[0] == "part":
         part = findattr(attributes,"part")
-        filename = findattr(attributes,"elementdir")+"/"+part
+        filename = findattr(attributes,"elementdir")+"/"+part+findattr(attributes, "outputsuffix")
         print "generated %s" % filename
         output_file = open(filename, "w")
         # all files start with the same Element line
