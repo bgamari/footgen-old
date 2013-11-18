@@ -228,6 +228,9 @@ def ball(x, y, dia, clear, mask, name):
 # draw silkscreen line
 def silk(x1, y1, x2, y2, width):
     return "\tElementLine [%dnm %dnm %dnm %dnm %dnm]\n" % (x1, y1, x2, y2, width)
+# draw silkscreen arc
+def arc(x1, y1, r, width):
+    return "\tElementArc [%dnm %dnm %dnm %dnm 0 180 %dnm]\n" % (x1, y1, r, r, width)
 # draw silkscreen box
 def box(x1, y1, x2, y2, width):
     return silk(x1,y1,x2,y1,width)+\
@@ -236,12 +239,13 @@ def box(x1, y1, x2, y2, width):
            silk(x1,y2,x1,y1,width)
 
 # draw inside box (PRB)
-# draws silkscreen box for SO or QFP type parts with notched pin #1 corner
+# draws silkscreen box for SO or QFP type parts with a small arc at top
 def insidebox(x1, y1, x2, y2, width):
     return silk(x1,y1,x2,y1,width)+\
-           silk(x2,y1,x2,y2+1000,width)+\
-           silk(x2,y2+1000,x2+1000,y2,width)+\
-           silk(x2+1000,y2,x1,y2,width)+\
+           silk(x2,y1,x2,y2,width)+\
+           silk(x2,y2,(x2+x1)/2-635000,y2,width)+\
+           silk((x2+x1)/2+635000,y2,x1,y2,width)+\
+           arc((x1+x2)/2,y2, 635000, width)+\
            silk(x1,y2,x1,y1,width)
 
 def bga(attrlist):
