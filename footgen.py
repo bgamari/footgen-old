@@ -638,6 +638,8 @@ while 1:
             break
     if attribute[0] == "part":
         part = findattr(attributes,"part")
+        if not os.path.isdir(findattr(attributes,"elementdir")):
+                os.makedirs(findattr(attributes,"elementdir"))
         filename = os.path.join(findattr(attributes,"elementdir"), part+findattr(attributes, "outputsuffix"))
         print "generated %s" % filename
         output_file = open(filename, "w")
